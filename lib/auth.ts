@@ -48,6 +48,9 @@ export async function login(
     throw new Error("เชื่อมต่อเซิร์ฟเวอร์ไม่ได้");
   }
 
+  //TODO remove log
+  console.log("Response: ", response);
+
   if (!response.ok) {
     throw new Error(
       response.status >= 500
