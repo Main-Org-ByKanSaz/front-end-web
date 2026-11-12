@@ -37,9 +37,9 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-900 px-4 text-white">
-      <div className="w-full max-w-md space-y-6 rounded-2xl border border-gray-700 bg-gray-800 p-8 shadow-xl">
-        <h2 className="text-center text-3xl font-extrabold text-blue-400">
+    <div className="flex min-h-dvh items-center justify-center bg-gray-900 px-4 py-8 text-white">
+      <div className="w-full max-w-md space-y-6 rounded-2xl border border-gray-700 bg-gray-800 p-6 shadow-xl sm:p-8">
+        <h2 className="text-center text-2xl font-extrabold text-blue-400 sm:text-3xl">
           โปรไฟล์
         </h2>
 
@@ -78,7 +78,7 @@ function Row({ label, value }: { label: string; value?: string }) {
   return (
     <div className="flex justify-between gap-4 border-b border-gray-700 pb-2">
       <dt className="text-gray-400">{label}</dt>
-      <dd className="text-right">{value || "-"}</dd>
+      <dd className="min-w-0 break-words text-right">{value || "-"}</dd>
     </div>
   );
 }

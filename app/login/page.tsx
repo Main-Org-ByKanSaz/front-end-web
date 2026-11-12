@@ -37,11 +37,11 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-900 px-4 text-white">
-      <div className="w-full max-w-md space-y-8 rounded-2xl bg-gray-800 p-8 shadow-xl border border-gray-700">
+    <div className="flex min-h-dvh items-center justify-center bg-gray-900 px-4 py-8 text-white">
+      <div className="w-full max-w-md space-y-8 rounded-2xl bg-gray-800 p-6 shadow-xl border border-gray-700 sm:p-8">
         {/* หัวข้อหน้า Login */}
         <div className="text-center">
-          <h2 className="text-3xl font-extrabold text-blue-400">
+          <h2 className="text-2xl font-extrabold text-blue-400 sm:text-3xl">
             Welcome Back
           </h2>
           <p className="mt-2 text-sm text-gray-400">
@@ -67,6 +67,11 @@ export default function LoginPage() {
               <input
                 type="text"
                 required
+                // มือถือ: ไม่ให้คีย์บอร์ดขึ้นต้นด้วยตัวพิมพ์ใหญ่หรือแก้คำอัตโนมัติ
+                autoComplete="username"
+                autoCapitalize="none"
+                autoCorrect="off"
+                spellCheck={false}
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 className="w-full rounded-lg bg-gray-900 border border-gray-700 px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
@@ -82,6 +87,7 @@ export default function LoginPage() {
               <input
                 type="password"
                 required
+                autoComplete="current-password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full rounded-lg bg-gray-900 border border-gray-700 px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
