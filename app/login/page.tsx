@@ -1,8 +1,12 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
+import { login, saveToken } from "@/lib/auth";
+
 export default function LoginPage() {
+  const router = useRouter();
   // 1. ตั้ง State สำหรับเก็บค่าที่ยูสเซอร์กรอกข้อมูล
   const [username, setUsername] = useState("testuser");
   const [password, setPassword] = useState("password123");
@@ -16,28 +20,18 @@ export default function LoginPage() {
     setErrorMessage("");
 
     try {
-      // ตรงนี้คือจุดที่เราจะยิง API ไปหา Backend (เช่น NestJS ของคุณ)
-      // สมมติยิงไปที่ http://localhost:PORT/auth/login
+      // ยิง API ไปที่ web-api ผ่าน /api (ดู next.config.ts)
+      const { access_token } = await login(username, password);
 
-      // 1. ดึงค่าจาก env (ถ้าหาไม่เจอให้ใช้ค่า default เป็นสายว่างหรือ url สำรอง)
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
-      const response = await fetch(`${apiUrl}/auth/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
-      });
-
-      if (!response.ok) {
-        throw new Error("เข้าสู่ระบบไม่สำเร็จ");
-      }
-
-      // บันทึก Token หรือจัดการหลังจากล็อกอินผ่านตรงนี้...
-      alert("เข้าสู่ระบบสำเร็จ! 🎉");
-    } catch (error: any) {
+      // เก็บ Token ไว้ใช้เรียก API อื่น แล้วไปหน้าโปรไฟล์
+      saveToken(access_token);
+      router.push("/profile");
+    } catch (error) {
       setErrorMessage(
-        error.message || "เกิดข้อผิดพลาดในการเชื่อมต่อเซิร์ฟเวอร์",
+        error instanceof Error
+          ? error.message
+          : "เกิดข้อผิดพลาดในการเชื่อมต่อเซิร์ฟเวอร์",
       );
-    } finally {
       setIsLoading(false);
     }
   };
